@@ -31,12 +31,13 @@ INNER JOIN username2score us ON u.usernameID = us.usernameID
 INNER JOIN score s ON us.scoreID = s.scoreID
 ORDER BY s.score DESC;
 ````
+Ausserdem habe ich damit begonnen, ein Einstellungs-Menü zu implementieren, wo grundlegende Einstellungen, wie Key-Binds und die Musik-Lautstärke verändert werden können.
 ## 16.5 Kernfunktionalität und Ausbau
 
-- [ ] ...
-- [ ] ...
-- [ ] ...
-- [ ] ...
+- [ ] Settings-Menü abschliessen
+- [ ] Block-Anzeige (Der nächste Block wird angezeigt)
+- [ ] Alten Code Bereinigen (DRY-Prinzip)
+- [ ] Evtl. noch weitere Sounds in das Spiel einfügen
 
 ✍️ Heute habe ich... (50-100 Wörter)
 

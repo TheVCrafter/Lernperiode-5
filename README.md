@@ -16,14 +16,21 @@ Heute fügte ich zunächst eine Textbox ein, welche beim Starten des Spiels ange
 
 ## 9.5 Kernfunktionalität
 
-- [ ] ... (dieses AP sollte zur Hälfte offline, also ohne Laptop zu bearbeiten sein — beispielsweise ein Datenmodell?)
-- [ ] ...
-- [ ] ...
+- [x] **Bugfixes** (fehlerhafte Daten-Speicherung)
+- [x] **Einfügen einer funktionierenden Bestenliste** (10 beste Ergebnisse werden angezeigt)
+- [x] **Einfügen eines Menüs für Settings**
 
-✍️ Heute habe ich... (50-100 Wörter)
+Heute habe ich mich zunächst damit beschäftigt, einige **Fehler zu beheben**. Denn als ich nochmals prüfte, ob die **Daten richtig in der Datenbank gespeichert** werden, fiel mir auf, dass statt nur einem neuen Eintrag **komischerweise 34** erstellt wurden. Nachdem ich diesen **Fehler** ausgebessert hatte, begann ich damit, eine **Highscore-Liste** zu erstellen, welche alle erreichten Punktzahlen aller User zeigt.
 
-☝️ Vergessen Sie nicht, bis einen ersten Code auf github hochzuladen
+Dazu kreierte ich zunächst ein neues **Form** namens `Highscores` und darin eine `ListView`, um die verschiedenen Einträge anzuzeigen. Die Daten werden mithilfe einer **SQL-Abfrage** geladen:
 
+```sql
+SELECT u.username, s.score
+FROM username u
+INNER JOIN username2score us ON u.usernameID = us.usernameID
+INNER JOIN score s ON us.scoreID = s.scoreID
+ORDER BY s.score DESC;
+````
 ## 16.5 Kernfunktionalität und Ausbau
 
 - [ ] ...

@@ -1,56 +1,61 @@
 ﻿using NAudio.Wave;
-using System;
 
 public class MusicPlayer
 {
-    bool stop = false;
+    private static MusicPlayer instance;
+    public static MusicPlayer Instance => instance ??= new MusicPlayer();
+
     private WaveOutEvent outputDevice;
     private AudioFileReader audioFile;
+    private bool stopRequested;
 
-    // Constructor to initialize the music player
-    public MusicPlayer()
+    private float volume = 1.0f; // Standardlautstärke (maximal)
+
+    private MusicPlayer()
     {
         outputDevice = new WaveOutEvent();
+        outputDevice.PlaybackStopped += OnPlaybackStopped;
+        outputDevice.Volume = volume;
     }
 
-    // Play music and loop indefinitely
     public void PlayMusic(string filePath)
     {
-        StopMusic(); // Stop any current music before starting new music
-        stop = false;
+        StopMusic();
+        stopRequested = false;
         audioFile = new AudioFileReader(filePath);
         outputDevice.Init(audioFile);
-        outputDevice.PlaybackStopped += OnPlaybackStopped; // Handle when playback stops
-
+        outputDevice.Volume = volume;
         outputDevice.Play();
     }
 
-    // Stop the music playback
     public void StopMusic()
     {
-        if (outputDevice != null)
-        {
-            stop = true;
-            outputDevice.Stop();
-            outputDevice.Dispose();
+        stopRequested = true;
+        outputDevice?.Stop();
+        audioFile?.Dispose();
+        audioFile = null;
+    }
 
-            // Dispose of the previous audio file to free up resources
-            if (audioFile != null)
-            {
-                audioFile.Dispose();
-                audioFile = null;
-            }
+    private void OnPlaybackStopped(object sender, StoppedEventArgs e)
+    {
+        if (!stopRequested && audioFile != null)
+        {
+            audioFile.Position = 0;
+            outputDevice.Play();
         }
     }
 
-    // Event handler that triggers when playback stops
-    private void OnPlaybackStopped(object sender, StoppedEventArgs e)
+    // Neue Eigenschaft zum Setzen der Lautstärke
+    public float Volume
     {
-        // Restart the music automatically if it stops (looping)
-        if (audioFile != null && stop ==false)
+        get => volume;
+        set
         {
-            audioFile.Position = 0; // Reset to the beginning
-            outputDevice.Play(); // Play the music again
+            volume = value;
+            if (outputDevice != null)
+            {
+                outputDevice.Volume = volume;
+            }
         }
     }
 }

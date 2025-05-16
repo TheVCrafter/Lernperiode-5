@@ -218,6 +218,7 @@
             Controls.Add(PauseMenu);
             Controls.Add(button1);
             ForeColor = SystemColors.Control;
+            FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MdiChildrenMinimizedAnchorBottom = false;
             MinimizeBox = false;

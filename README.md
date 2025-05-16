@@ -34,21 +34,23 @@ ORDER BY s.score DESC;
 Ausserdem habe ich damit begonnen, ein Einstellungs-Menü zu implementieren, wo grundlegende Einstellungen, wie Key-Binds und die Musik-Lautstärke verändert werden können.
 ## 16.5 Kernfunktionalität und Ausbau
 
-- [ ] Settings-Menü abschliessen
+- [X] Settings-Menü abschliessen
 - [ ] Block-Anzeige (Der nächste Block wird angezeigt)
 - [ ] Alten Code Bereinigen (DRY-Prinzip)
 - [ ] Evtl. noch weitere Sounds in das Spiel einfügen
 
-✍️ Heute habe ich... (50-100 Wörter)
+Heute arbeitete ich vor allem am **Settings-Menü**. Zunächst ersetzte ich die zuvor verwendeten *ComboBoxen* durch `TextBox`-Elemente, um eine direktere und intuitivere Eingabemöglichkeit für die **KeyBinds** zu schaffen. Danach implementierte ich eine Funktion, die es ermöglicht, den KeyBind eines Steuerelements **dynamisch zu ändern**: Sobald der Nutzer auf eine `TextBox` klickt, wartet das Programm auf die nächste **Tasteneingabe** und aktualisiert anschließend den entsprechenden `KeyBind` automatisch.
 
-☝️ Vergessen Sie nicht, bis einen ersten Code auf github hochzuladen
+Anschließend versuchte ich, eine **Lautstärkeeinstellung** für die Hintergrundmusik zu implementieren. Dafür fügte ich eine `TrackBar` ein, mit der man die **Lautstärke** durch Verschieben anpassen kann. Um das umzusetzen, musste ich meinen bisherigen `MusicPlayer` anpassen und um eine `SetVolume(float volume)`-Funktion erweitern.
+
+Nach dieser Änderung stieß ich jedoch auf ein Problem: Die **Wiedergabe der Musik** funktionierte nicht mehr zuverlässig – teilweise wurde sie nach dem Starten **nicht abgespielt**, oder das **Looping** funktionierte **nicht wie gewünscht**. Deshalb habe ich mir Vorgenommen, mich nächste Woche hauptsächlich mit dem Beheben von Fehlern zu beschäftigen.
 
 ## 23.5 Abschluss
 
-- [ ] ...
-- [ ] ... (falls Ihnen nichts einfällt: Können Sie mit einem PowerShell-Skript von Ihrer Datenbank regelmäßig ein *backup* erstellen?)
-- [ ] Reflexion über Ihre Arbeitsweise
-- [ ] Beschreibung des fertigen Projekts mit .gif etc.
+- [X] Bug-Fixes (MusicPlayer, evtl. noch weitere)
+- [ ] Code verschönern/ Ausbessern (DRY-Prinzip)
+- [ ] Blockanzeige (falls noch genügend Zeit übrig)
+- [ ] Reflexion und Beschreibung des Projekts schreiben
 
 ✍️ Heute habe ich... (50-100 Wörter)
 

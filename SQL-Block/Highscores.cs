@@ -67,7 +67,7 @@ namespace Winforms_experiment
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(149, 73);
             label1.Name = "label1";
-            label1.Size = new Size(193, 27);
+            label1.Size = new Size(162, 22);
             label1.TabIndex = 4;
             label1.Text = "All Time Scores:";
             // 
@@ -93,7 +93,7 @@ namespace Winforms_experiment
             // Highscores
             // 
             BackColor = Color.Firebrick;
-            ClientSize = new Size(494, 907);
+            ClientSize = new Size(500, 950);
             Controls.Add(highscoreList);
             Controls.Add(label1);
             Controls.Add(backToMenu);

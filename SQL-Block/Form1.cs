@@ -51,11 +51,6 @@ namespace Winforms_experiment
             // Fokus zurück auf Form, falls zurück gekehrt wird
             this.Focus();
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             Application.Exit();

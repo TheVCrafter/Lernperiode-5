@@ -39,12 +39,16 @@ namespace Winforms_experiment
         TimeSpan timeForDisplay;
         Stopwatch gameTime = new Stopwatch();
         int[,] nextCoordinates;
+        int[,] currentCoordinates;
         PictureBox[] nextShape = new PictureBox[4];
         PictureBox[] previousShapes = new PictureBox[2048];
         private System.Windows.Forms.Timer fallTimer = new System.Windows.Forms.Timer();
         private System.Windows.Forms.Timer gameTimeUpdate = new System.Windows.Forms.Timer();
         private Dictionary<string, int[][,]> shapeRotations;
-
+        private string currentShape = "";
+        private string nextShapeKey = "";
+        private int currentRotationIndex = 0;
+        private string previousShape = "";
         public Wintris_Gameplay()
         {
             InitializeComponent();
@@ -72,7 +76,6 @@ namespace Winforms_experiment
             this.Controls.Add(scoreDisplay);
             this.Controls.Add(levelDisplay);
 
-            // Formen initialisieren (wie gehabt)
             int[,] oCoordinates = { { -1, 3 }, { -1, 4 }, { 0, 3 }, { 0, 4 } };
 
             int[,] sCoordinates_0 = { { -1, 3 }, { 0, 3 }, { 0, 2 }, { -1, 4 } };
@@ -106,18 +109,18 @@ namespace Winforms_experiment
                 { "L", new int[][,] { lCoordinates_0, lCoordinates_90, lCoordinates_180, lCoordinates_270 } },
                 { "J", new int[][,] { jCoordinates_0, jCoordinates_90, jCoordinates_180, jCoordinates_270 } },
                 { "T", new int[][,] { tCoordinates_0, tCoordinates_90, tCoordinates_180, tCoordinates_270 } },
-                { "I", new int[][,] { iCoordinates_0, iCoordinates_90 } }
+                { "I", new int[][,] { iCoordinates_0, iCoordinates_90 } },
+                { "O", new int[][,] { oCoordinates}}
             };
-            MusicPlayer.Instance.PlayMusic(@"C:\Users\vince\source\repos\Winforms experiment\bin\Debug\TETRIS PHONK.mp3");
+            string path = @"C:\Users\vince\source\repos\Winforms experiment\bin\Debug\TETRIS PHONK.mp3";
+            MusicPlayer.Instance.PlayMusic(path);
             CreateShape();
         }
 
-        // Restlicher Code bleibt unverändert, außer alle player -> MusicPlayer.Instance
-
         private void leaveGame_Click(object sender, EventArgs e)
         {
-            Wintris mainMenu = new Wintris();
             MusicPlayer.Instance.StopMusic();
+            Wintris mainMenu = new Wintris();
             this.Close();
             mainMenu.Show();
             DataBaseManagement.NewScore(score);
@@ -126,32 +129,52 @@ namespace Winforms_experiment
 
         private void GameOverAgain_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            MusicPlayer.Instance.StopMusic();
+            this.Close();
             Wintris_Gameplay game = new Wintris_Gameplay();
             game.Show();
-            MusicPlayer.Instance.StopMusic();
             DataBaseManagement.NewScore(score);
             DataBaseManagement.User2Score(score, Wintris.username);
         }
         void CreateShape()
         {
+            iDisplay.Hide();
+            lDisplay.Hide();
+            jDisplay.Hide();
+            tDisplay.Hide();
+            sDisplay.Hide();
+            zDisplay.Hide();
+            oDisplay.Hide();
             scoreDisplay.Text = $"Score: {score}";
             levelDisplay.Text = $"Level: {level}";
             xoffset = 0;
             yoffset = 0;
+
             Random rnd = new Random();
             List<string> shapeKeys = new List<string>(shapeRotations.Keys);
-            string randomShapeKey = shapeKeys[rnd.Next(shapeKeys.Count)];
-            currentShape = randomShapeKey; // Setze die aktuelle Form für die Rotation
-            nextCoordinates = shapeRotations[randomShapeKey][0];
-            NeueForm(nextCoordinates);
-        }
-        void NeueForm(int[,] koordinaten)
-        {
-            for (int i = 0; i < koordinaten.GetLength(0); i++)
+
+            // Wenn das erste Shape erstellt wird
+            if (string.IsNullOrEmpty(nextShapeKey))
             {
-                int x = koordinaten[i, 1];
-                int y = koordinaten[i, 0];
+                nextShapeKey = shapeKeys[rnd.Next(shapeKeys.Count)];
+            }
+            currentShape = nextShapeKey;
+            currentRotationIndex = 0;
+            currentCoordinates = shapeRotations[currentShape][currentRotationIndex];
+
+            // Ziehe schon das nächste zufällige Shape
+            nextShapeKey = shapeKeys[rnd.Next(shapeKeys.Count)];
+            nextCoordinates = shapeRotations[nextShapeKey][0];
+            NewShape(currentCoordinates);
+            DisplayNextShape(nextShapeKey);
+        }
+
+        void NewShape(int[,] coordinates)
+        {
+            for (int i = 0; i < coordinates.GetLength(0); i++)
+            {
+                int x = coordinates[i, 1];
+                int y = coordinates[i, 0];
 
                 PictureBox box = new PictureBox
                 {
@@ -169,6 +192,33 @@ namespace Winforms_experiment
 
                 nextShape[i] = (box);
                 this.Controls.Add(box);
+            }
+        }
+        void DisplayNextShape(string nextShapeIndex)
+        {
+            switch (nextShapeIndex)
+            {
+                case "S":
+                    sDisplay.Show();
+                    break;
+                case "Z":
+                    zDisplay.Show();
+                    break;
+                case "L":
+                    lDisplay.Show();
+                    break;
+                case "J":
+                    jDisplay.Show();
+                    break;
+                case "T":
+                    tDisplay.Show();
+                    break;
+                case "I":
+                    iDisplay.Show();
+                    break;
+                case "O":
+                    oDisplay.Show();
+                    break;
             }
         }
         private void Game_KeyDown(object sender, KeyEventArgs e)
@@ -259,7 +309,7 @@ namespace Winforms_experiment
                 turningright = false;
                 RotateShape();
             }
-                if (e.KeyCode == BoostKey)
+            if (e.KeyCode == BoostKey)
             {
                 boostactive = true;
             }
@@ -319,7 +369,7 @@ namespace Winforms_experiment
                 }
             }
             if (touchingBottom)
-            {          
+            {
                 for (int i = 0; i < nextShape.Length; i++)
                 {
                     for (int j = 0; j < previousShapes.Length; j++)
@@ -389,9 +439,6 @@ namespace Winforms_experiment
 
             }
         }
-        private string currentShape = "";
-        private int currentRotationIndex = 0;
-        private string previousShape;
         int previousRotation;
         void RotateShape()
         {
@@ -488,9 +535,13 @@ namespace Winforms_experiment
         {
             button1.Hide();
             PauseMenu.Show();
+            PauseMenu.BringToFront();
             Continue.Show();
+            Continue.BringToFront();
             Settings.Show();
+            Settings.BringToFront();
             leaveGame.Show();
+            leaveGame.BringToFront();
             fallTimer.Stop();
             gameTime.Stop();
         }
@@ -515,15 +566,6 @@ namespace Winforms_experiment
         private void GameOverLeave_Click(object sender, EventArgs e)
         {
             leaveGame_Click(sender, e);
-        }
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            // Unterdrücke Pfeiltasten, damit sie keinen Fokuswechsel auslösen
-            if (keyData == Keys.Up || keyData == Keys.Down || keyData == Keys.Left || keyData == Keys.Right)
-            {
-                return true; // Fokuswechsel verhindern
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

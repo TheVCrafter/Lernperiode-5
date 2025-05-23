@@ -40,7 +40,7 @@
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.Location = new Point(197, 178);
             label1.Name = "label1";
-            label1.Size = new Size(112, 27);
+            label1.Size = new Size(93, 22);
             label1.TabIndex = 5;
             label1.Text = "Settings:";
             // 
@@ -52,7 +52,7 @@
             Volume.Maximum = 100;
             Volume.Name = "Volume";
             Volume.RightToLeft = RightToLeft.No;
-            Volume.Size = new Size(130, 56);
+            Volume.Size = new Size(130, 45);
             Volume.TabIndex = 15;
             Volume.TickStyle = TickStyle.None;
             // 
@@ -73,7 +73,7 @@
             label2.ForeColor = Color.White;
             label2.Location = new Point(161, 220);
             label2.Name = "label2";
-            label2.Size = new Size(156, 266);
+            label2.Size = new Size(136, 224);
             label2.TabIndex = 6;
             label2.Text = "Move right:\r\n\r\nMove left:\r\n\r\nTurn right:\r\n\r\nTurn left:\r\n\r\nBoost:\r\n\r\nPause:\r\n\r\n\r\n        Music Volume";
             // 
@@ -81,42 +81,42 @@
             // 
             Move_Right.Location = new Point(290, 218);
             Move_Right.Name = "Move_Right";
-            Move_Right.Size = new Size(50, 27);
+            Move_Right.Size = new Size(50, 23);
             Move_Right.TabIndex = 16;
             // 
             // Move_Left
             // 
             Move_Left.Location = new Point(290, 256);
             Move_Left.Name = "Move_Left";
-            Move_Left.Size = new Size(50, 27);
+            Move_Left.Size = new Size(50, 23);
             Move_Left.TabIndex = 17;
             // 
             // Pause
             // 
             Pause.Location = new Point(290, 409);
             Pause.Name = "Pause";
-            Pause.Size = new Size(50, 27);
+            Pause.Size = new Size(50, 23);
             Pause.TabIndex = 18;
             // 
             // Boost
             // 
             Boost.Location = new Point(290, 370);
             Boost.Name = "Boost";
-            Boost.Size = new Size(50, 27);
+            Boost.Size = new Size(50, 23);
             Boost.TabIndex = 19;
             // 
             // Turn_Left
             // 
             Turn_Left.Location = new Point(290, 332);
             Turn_Left.Name = "Turn_Left";
-            Turn_Left.Size = new Size(50, 27);
+            Turn_Left.Size = new Size(50, 23);
             Turn_Left.TabIndex = 20;
             // 
             // Turn_Right
             // 
             Turn_Right.Location = new Point(290, 294);
             Turn_Right.Name = "Turn_Right";
-            Turn_Right.Size = new Size(50, 27);
+            Turn_Right.Size = new Size(50, 23);
             Turn_Right.TabIndex = 21;
             // 
             // SaveKeybinds
@@ -137,7 +137,7 @@
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.Firebrick;
-            ClientSize = new Size(510, 952);
+            ClientSize = new Size(500, 950);
             Controls.Add(SaveKeybinds);
             Controls.Add(Turn_Right);
             Controls.Add(Turn_Left);

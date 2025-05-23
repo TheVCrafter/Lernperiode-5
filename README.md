@@ -99,16 +99,16 @@ Das grundlegende Gameplay orientiert sich weiterhin am klassischen Tetris-Prinzi
 ## Gameplay/Screenshots
 
 ### Startbildschirm mit Namenseingabe
-![Startbildschirm mit Namenseingabe](pfad/zum/startbildschirm.gif)
+![Startbildschirm mit Namenseingabe](user_Login.gif)
 
 ### Bestenliste
-![Bestenliste](pfad/zur/bestenliste.gif)
+![Bestenliste](highscores.gif)
 
 ### Einstellungsmenü (Key-Binds & Lautstärke)
-![Einstellungsmenü](pfad/zum/einstellungsmenue.gif)
+![Einstellungsmenü](settings.gif)
 
 ### Vorschau des nächsten Blocks im Spiel
-![Nächster Block Vorschau](pfad/zur/blockvorschau.gif)
+![Nächster Block Vorschau](gameplay.gif)
 
 ---
 

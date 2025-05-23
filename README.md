@@ -114,8 +114,10 @@ Das grundlegende Gameplay orientiert sich weiterhin am klassischen Tetris-Prinzi
 
 ## Reflexion
 
-Während dieser Lernperiode konnte ich viele wichtige Programmierkenntnisse vertiefen, insbesondere im Bereich Datenbankanbindung, UI-Design und Fehlerbehebung. Besonders herausfordernd war die Umsetzung der Datenpersistenz und das dynamische Einstellungsmenü.
+In dieser Lernperiode habe ich viele wichtige Dinge rund ums Programmieren dazugelernt – besonders in den Bereichen **Datenbank**, **Benutzeroberfläche (UI)** und **Fehlersuche**.  
+Eine der grössten Herausforderungen war es, die **Daten dauerhaft zu speichern** und ein **flexibles Einstellungsmenü** zu erstellen, das auf Benutzereingaben reagieren kann.
 
-Das DRY-Prinzip habe ich konsequenter angewendet als zuvor, was den Code übersichtlicher und wartbarer gemacht hat. Leider gab es noch Probleme mit dem MusicPlayer, die ich nicht vollständig lösen konnte.
+Ich habe auch gelernt, das **DRY-Prinzip** (*Don't Repeat Yourself*) besser anzuwenden. Das bedeutet, dass ich doppelten Code vermeide. Dadurch wurde mein Code **übersichtlicher** und **leichter zu bearbeiten**.  
+Ein Problem konnte ich aber leider noch nicht lösen: Der **MusicPlayer** hat im Spiel nicht richtig funktioniert. Ich möchte später noch weiter daran arbeiten.
 
-Für die nächste Lernperiode nehme ich mir vor, mich intensiver mit Audio-Programmierung zu beschäftigen und meine Teststrategien zu verbessern, um Fehler früher zu erkennen. Ausserdem möchte ich die Code-Struktur weiter optimieren und mehr automatisierte Tests einbauen.
+Für die nächste Lernperiode nehme ich mir vor, das DRY-Prinzip **noch besser umzusetzen**. Ausserdem möchte ich auch **neue Programmiersprachen wie Java und C++** ausprobieren, um noch mehr Erfahrungen zu sammeln.

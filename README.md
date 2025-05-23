@@ -1,28 +1,41 @@
 # Lernperiode 5
 
-2.5 bis 23.5
+**Zeitraum:** 2. Mai bis 23. Mai
 
-## Grob-Planung
-Ich habe vor mein Tetris Spiel um die Funktionen zu erweitern, Spieler Namen angeben zu können und die erreichten Punktzahlen zu speichern. Ausserdem soll es eine Bestenliste mit den 10 besten Scores geben.
+---
 
-## 2.5
+## Grobplanung
 
-- [x] Textbox zum angeben eines Benutzernamens hinzufügen
-- [X] Knopf zum anzeigen der Bestenliste hinzufügen
-- [X] Erstellen einer Datenbank für das Spiel
-- [X] Implementation des Datenspeicherns
+Ich habe geplant, mein Tetris-Spiel um folgende Funktionen zu erweitern:
 
-Heute fügte ich zunächst eine Textbox ein, welche beim Starten des Spiels angezeigt wird und es ermöglicht einen Benutzernamen anzugeben. Ich kümmerte mich ausserdem darum, dass solange das Spiel nicht komplett neu gestartet wird immer der gleiche Benutzername benutzt wird. Als ich damit fertig war, fügte ich noch einen Knopf hinzu welchen ich in Zukunft dazu verwenden werde die Bestenliste einzublenden. Ich schrieb jedoch noch keinen Code dazu. Um das Speichern von Daten zu ermöglichen erstellte ich dann eine SQL-Datenbank mit dem namen Wintris_Data. Dort fügte ich anschliessend 3 Tabellen ein. Eine für scores, eine für usernames und eine zwischentabelle username2score da es sich um eine n:m beziehung handelt. Anschliessend begann ich damit den Code für das Speichern der Daten zu schreiben. Dazu musste ich das NuGet-Packet "System.Data.SqlClient" installieren. Beim Coden versuchte ich dann anschliessend, anders als in der letzten Lernperiode, auch auf das DRY-Prinzip zu achten.
+- Eingabe von Spielernamen  
+- Speicherung der erreichten Punktzahlen  
+- Bestenliste mit den 10 höchsten Scores  
 
-## 9.5 Kernfunktionalität
+---
 
-- [x] **Bugfixes** (fehlerhafte Daten-Speicherung)
-- [x] **Einfügen einer funktionierenden Bestenliste** (10 beste Ergebnisse werden angezeigt)
-- [x] **Einfügen eines Menüs für Settings**
+## 2. Mai
 
-Heute habe ich mich zunächst damit beschäftigt, einige **Fehler zu beheben**. Denn als ich nochmals prüfte, ob die **Daten richtig in der Datenbank gespeichert** werden, fiel mir auf, dass statt nur einem neuen Eintrag **komischerweise 34** erstellt wurden. Nachdem ich diesen **Fehler** ausgebessert hatte, begann ich damit, eine **Highscore-Liste** zu erstellen, welche alle erreichten Punktzahlen aller User zeigt.
+- [x] Textbox zur Eingabe eines Benutzernamens hinzufügen  
+- [x] Button zum Anzeigen der Bestenliste hinzufügen  
+- [x] Erstellung einer Datenbank für das Spiel  
+- [x] Implementierung der Datenspeicherung  
 
-Dazu kreierte ich zunächst ein neues **Form** namens `Highscores` und darin eine `ListView`, um die verschiedenen Einträge anzuzeigen. Die Daten werden mithilfe einer **SQL-Abfrage** geladen:
+Heute habe ich eine Textbox eingebaut, die beim Start des Spiels angezeigt wird und die Eingabe eines Benutzernamens ermöglicht. Ausserdem habe ich sichergestellt, dass solange das Spiel nicht neu gestartet wird, immer der gleiche Benutzername verwendet wird. Anschliessend fügte ich einen Button hinzu, der zukünftig zum Anzeigen der Bestenliste dienen soll (Code hierfür wurde noch nicht implementiert). 
+
+Für die Speicherung der Daten erstellte ich eine SQL-Datenbank namens `Wintris_Data` mit drei Tabellen: `scores`, `usernames` und der Zwischentabelle `username2score`, da eine n:m-Beziehung vorliegt. Zur Datenbank-Anbindung installierte ich das NuGet-Paket `System.Data.SqlClient`. Beim Programmieren habe ich versucht, diesmal konsequent das DRY-Prinzip einzuhalten.
+
+---
+
+## 9. Mai – Kernfunktionalität
+
+- [x] Bugfixes bei fehlerhafter Datenspeicherung  
+- [x] Implementierung einer funktionierenden Bestenliste (Anzeige der 10 besten Ergebnisse)  
+- [x] Hinzufügen eines Einstellungsmenüs (Settings)  
+
+Ich habe zuerst Fehler bei der Datenspeicherung behoben: Statt einem neuen Eintrag wurden fälschlicherweise 34 Einträge erzeugt. Nach der Fehlerbehebung begann ich mit der Erstellung der Highscore-Liste, die alle Punktzahlen aller Spieler anzeigt.
+
+Dazu erstellte ich ein neues Formular `Highscores` mit einer `ListView` zur Anzeige der Einträge. Die Daten werden per SQL-Abfrage geladen:
 
 ```sql
 SELECT u.username, s.score
@@ -30,36 +43,79 @@ FROM username u
 INNER JOIN username2score us ON u.usernameID = us.usernameID
 INNER JOIN score s ON us.scoreID = s.scoreID
 ORDER BY s.score DESC;
-````
-Ausserdem habe ich damit begonnen, ein Einstellungs-Menü zu implementieren, wo grundlegende Einstellungen, wie Key-Binds und die Musik-Lautstärke verändert werden können.
-## 16.5 Kernfunktionalität und Ausbau
+```
 
-- [X] Settings-Menü abschliessen
-- [ ] Block-Anzeige (Der nächste Block wird angezeigt)
-- [ ] Alten Code Bereinigen (DRY-Prinzip)
-- [ ] Evtl. noch weitere Sounds in das Spiel einfügen
+Ausserdem begann ich mit der Implementierung eines Einstellungsmenüs, in dem grundlegende Einstellungen wie Tastenbelegung (Key-Binds) und Musiklautstärke geändert werden können.
 
-Heute arbeitete ich vor allem am **Settings-Menü**. Zunächst ersetzte ich die zuvor verwendeten *ComboBoxen* durch `TextBox`-Elemente, um eine direktere und intuitivere Eingabemöglichkeit für die **KeyBinds** zu schaffen. Danach implementierte ich eine Funktion, die es ermöglicht, den KeyBind eines Steuerelements **dynamisch zu ändern**: Sobald der Nutzer auf eine `TextBox` klickt, wartet das Programm auf die nächste **Tasteneingabe** und aktualisiert anschließend den entsprechenden `KeyBind` automatisch.
+---
 
-Anschließend versuchte ich, eine **Lautstärkeeinstellung** für die Hintergrundmusik zu implementieren. Dafür fügte ich eine `TrackBar` ein, mit der man die **Lautstärke** durch Verschieben anpassen kann. Um das umzusetzen, musste ich meinen bisherigen `MusicPlayer` anpassen und um eine `SetVolume(float volume)`-Funktion erweitern.
+## 16. Mai – Kernfunktionalität und Ausbau
 
-Nach dieser Änderung stieß ich jedoch auf ein Problem: Die **Wiedergabe der Musik** funktionierte nicht mehr zuverlässig – teilweise wurde sie nach dem Starten **nicht abgespielt**, oder das **Looping** funktionierte **nicht wie gewünscht**. Deshalb habe ich mir Vorgenommen, mich nächste Woche hauptsächlich mit dem Beheben von Fehlern zu beschäftigen.
+- [x] Settings-Menü fertigstellen  
+- [ ] Blockanzeige (Vorschau des nächsten Blocks) implementieren  
+- [ ] Alten Code bereinigen (DRY-Prinzip)  
+- [ ] Weitere Sounds ins Spiel einfügen (optional)  
 
-## 23.5 Abschluss
+Ich arbeitete vor allem am Settings-Menü. Die zuvor genutzten *ComboBoxen* ersetzte ich durch `TextBox`-Elemente, um eine direktere Eingabemöglichkeit für die Key-Binds zu schaffen. Zusätzlich implementierte ich eine Funktion, die es ermöglicht, Key-Binds dynamisch zu ändern: Nach einem Klick auf eine `TextBox` wartet das Programm auf die nächste Tasteneingabe und aktualisiert den Key-Bind automatisch.
 
-- [X] Bug-Fixes (MusicPlayer, evtl. noch weitere)
-- [ ] Code verschönern/ Ausbessern (DRY-Prinzip)
-- [ ] Blockanzeige (falls noch genügend Zeit übrig)
-- [ ] Reflexion und Beschreibung des Projekts schreiben
+Für die Lautstärkeregelung der Hintergrundmusik fügte ich eine `TrackBar` hinzu. Die Lautstärke kann darüber stufenlos eingestellt werden. Dafür erweiterte ich meinen `MusicPlayer` um die Funktion `SetVolume(float volume)`.
 
-✍️ Heute habe ich... (50-100 Wörter)
+Leider trat ein Problem auf: Die Wiedergabe der Musik funktionierte nicht zuverlässig, teilweise wurde sie nicht abgespielt oder das Looping funktionierte nicht wie erwartet. Deshalb plane ich, mich nächste Woche vor allem mit der Fehlerbehebung zu beschäftigen.
 
-☝️ Vergessen Sie nicht, bis einen ersten Code auf github hochzuladen
+---
+
+## 23. Mai – Abschluss
+
+- [x] Bugfixes (MusicPlayer und weitere kleinere Fehler)  
+- [x] Blockanzeige implementieren (falls Zeit reicht)  
+- [x] Reflexion und Projektbeschreibung verfassen  
+
+Ich arbeitete weiter an der Behebung des MusicPlayer-Problems. Nach mehreren Anpassungen der Methode `PlayMusic()` ohne Erfolg stellte ich fest, dass die Musik im Hauptmenü zwar funktionierte, die Ingame-Musik aber nur kurz spielte und dann stoppte.
+
+Ich entschied mich, meine Zeit besser zu nutzen und kleinere Bugs zu beheben. Dabei bemerkte ich, dass die O-Form im Spiel nie erschien. Ursache war, dass sie nicht im `shapeRotations`-Dictionary eingetragen war. Nach Ergänzung funktionierte die O-Form wie erwartet.
+
+Anschliessend implementierte ich die Vorschauanzeige des nächsten Blocks (bekannt aus klassischem Tetris). Ich erstellte für jede Blockform in Canva ein schwarzes Rechteck mit der jeweiligen Form, exportierte diese als PNG-Dateien und fügte sie als `PictureBox` mit `SizeMode = StretchImage` ein.
+
+Im Code wird nun zwischen `CurrentShape` und `NextShape` unterschieden. Über einen `switch`-Block wird die passende `PictureBox` angezeigt, die den nächsten Block visualisiert.
+
+---
 
 ## Fertiges Projekt
 
-✍️ Beschreiben Sie hier, wie Ihr Projekt am Ende aussieht, und fügen Sie mindestens ein .gif ein.
+Mein Tetris-Spiel wurde deutlich erweitert und bietet nun zahlreiche Funktionen, die das Spielerlebnis nachhaltig verbessern.
+
+Bereits beim Start des Spiels kann der Spieler seinen Namen eingeben. Dadurch wird jede Partie personalisiert und die erreichten Punktzahlen können eindeutig einem Nutzer zugeordnet werden. Die Ergebnisse werden in einer eigens erstellten SQL-Datenbank gespeichert, sodass alle Highscores dauerhaft erhalten bleiben – auch nach dem Schliessen des Spiels.
+
+Über einen Button lässt sich eine Bestenliste öffnen, die automatisch die zehn besten Ergebnisse aller Spieler anzeigt. Dies fördert den Wettbewerbsgeist und ermöglicht es, die eigenen Fortschritte stets im Blick zu behalten.
+
+Zusätzlich wurde ein Einstellungsmenü integriert, in dem grundlegende Anpassungen vorgenommen werden können. So ist es möglich, die Tastenbelegung (Key-Binds) individuell zu konfigurieren und die Lautstaerke der Hintergrundmusik nach Wunsch anzupassen. Diese Flexibilität trägt zu einer angenehmeren und benutzerfreundlicheren Spielumgebung bei.
+
+Ein weiteres praktisches Feature ist die Vorschau des nächsten Blocks, wie sie aus klassischen Tetris-Versionen bekannt ist. Dadurch kann der Spieler besser planen und sein Spiel strategischer gestalten.
+
+Das grundlegende Gameplay orientiert sich weiterhin am klassischen Tetris-Prinzip. Durch die neuen Funktionen wirkt das Spiel jedoch moderner und komfortabler. Die Benutzeroberfläche ist übersichtlich und intuitiv gestaltet, sodass sich Spieler schnell zurechtfinden. Die Hintergrundmusik sorgt zusätzlich für eine angenehme Atmosphäre und erhöht den Spielspass.
+
+---
+
+## Gameplay/Screenshots
+
+### Startbildschirm mit Namenseingabe
+![Startbildschirm mit Namenseingabe](pfad/zum/startbildschirm.gif)
+
+### Bestenliste
+![Bestenliste](pfad/zur/bestenliste.gif)
+
+### Einstellungsmenü (Key-Binds & Lautstärke)
+![Einstellungsmenü](pfad/zum/einstellungsmenue.gif)
+
+### Vorschau des nächsten Blocks im Spiel
+![Nächster Block Vorschau](pfad/zur/blockvorschau.gif)
+
+---
 
 ## Reflexion
 
-✍️ Was ging gut, was ging weniger gut? Was haben Sie gelernt, und was würden Sie bei der nächsten Lernperiode versuchen besser zu machen? Fassen Sie auch einen übergeordneten Vorsatz für Ihr nächstes Jahr im Lernatelier (100 bis 200 Wörter).
+Während dieser Lernperiode konnte ich viele wichtige Programmierkenntnisse vertiefen, insbesondere im Bereich Datenbankanbindung, UI-Design und Fehlerbehebung. Besonders herausfordernd war die Umsetzung der Datenpersistenz und das dynamische Einstellungsmenü.
+
+Das DRY-Prinzip habe ich konsequenter angewendet als zuvor, was den Code übersichtlicher und wartbarer gemacht hat. Leider gab es noch Probleme mit dem MusicPlayer, die ich nicht vollständig lösen konnte.
+
+Für die nächste Lernperiode nehme ich mir vor, mich intensiver mit Audio-Programmierung zu beschäftigen und meine Teststrategien zu verbessern, um Fehler früher zu erkennen. Ausserdem möchte ich die Code-Struktur weiter optimieren und mehr automatisierte Tests einbauen.
